@@ -5,11 +5,7 @@ from datawriter import DataFileWriterLocal
 from extract import run_extraction
 
 
-def main(input_data_dir, extract_output_data_dir, extracts):
-    spark = SparkSession.builder \
-        .appName("SparkDataFrameLatencyProcessor") \
-        .getOrCreate()
-
+def main(spark, input_data_dir, extract_output_data_dir, extracts):
     person_domain_data_loader = IpCidrCustomDomainUserDataLoader(input_data_dir, spark)
     person_domain_df = person_domain_data_loader.load_df()
 
@@ -17,8 +13,6 @@ def main(input_data_dir, extract_output_data_dir, extracts):
 
     for name, df in results.items():
         DataFileWriterLocal.data_writer(df, extract_output_data_dir, f"spark_df_{name}")
-
-    spark.stop()
 
 
 if __name__ == "__main__":
@@ -29,7 +23,11 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    if not args.extract_name:
-        print("No extraction functions specified. Exiting.")
-    else:
-        main(args.input_data_dir, args.extract_output_data_dir, args.extract_name)
+    spark = SparkSession.builder \
+        .appName("SparkDataFrameLatencyProcessor") \
+        .getOrCreate()
+
+    try:
+        main(spark, args.input_data_dir, args.extract_output_data_dir, args.extract_name)
+    finally:
+        spark.stop()
