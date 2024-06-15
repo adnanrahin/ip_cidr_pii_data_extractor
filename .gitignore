@@ -1,3 +1,4 @@
 .idea
 __pycache__
 extract_outputs/*
+lib/*
