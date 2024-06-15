@@ -24,7 +24,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     spark = SparkSession.builder \
-        .appName("SparkDataFrameLatencyProcessor") \
+        .appName("IpCidrPIIDataExtractor") \
         .getOrCreate()
 
     try:
