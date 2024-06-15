@@ -5,11 +5,7 @@ echo "Current working directory: $(pwd)"
 
 # Zip Python files
 echo "Zipping Python files..."
-zip -r ../spark_job.zip *.py
-
-# Verify zip file contents
-echo "Contents of spark_job.zip:"
-unzip -l ../spark_job.zip
+zip -r spark_job.zip ../*.py
 
 # Submit Spark job
 echo "Submitting Spark job..."
