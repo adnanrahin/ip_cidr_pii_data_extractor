@@ -1,3 +1,4 @@
+zip -r ../spark_job.zip *.py
 spark-submit \
   --master spark://dev-server01:7077 \
   --deploy-mode client \
