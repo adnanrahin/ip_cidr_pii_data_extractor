@@ -26,8 +26,8 @@ spark-submit \
   --deploy-mode client \
   --driver-memory 2G \
   --driver-cores 2 \
-  --executor-memory 4G \
-  --executor-cores 2 \
+  --executor-memory 2G \
+  --executor-cores 1 \
   --total-executor-cores 12 \
   --py-files "$LIB_DIR/$SPARK_JOB_ZIP" \
   "$SRC_DIR/SparkDataFrameLatencyProcessor.py" \
