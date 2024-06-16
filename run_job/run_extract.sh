@@ -34,4 +34,9 @@ spark-submit \
   --input_data_dir /sandbox/storage/data/ip_cidr_data/dataset/ip_cidr_data_parquet \
   --extract_output_data_dir /sandbox/storage/data/ip_cidr_data/filter_data/pyspark_extracted_data \
   --extract_name find_all_male_person \
+  --extract_name count_total_iid_each_state \
+  --extract_name average_age_each_state \
+  --extract_name top_cities_by_population \
+  --extract_name find_persons_with_invalid_emails \
+  --extract_name statewise_male_female_count \
   --extract_name count_total_iid_each_state
