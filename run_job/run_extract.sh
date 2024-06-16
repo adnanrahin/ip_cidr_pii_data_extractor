@@ -24,9 +24,9 @@ echo "Submitting Spark job..."
 spark-submit \
   --master spark://dev-server01:7077 \
   --deploy-mode client \
-  --driver-memory 4G \
-  --driver-cores 4 \
-  --executor-memory 8G \
+  --driver-memory 2G \
+  --driver-cores 2 \
+  --executor-memory 4G \
   --executor-cores 2 \
   --total-executor-cores 12 \
   --py-files "$LIB_DIR/$SPARK_JOB_ZIP" \
