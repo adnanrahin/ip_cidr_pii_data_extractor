@@ -5,7 +5,7 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 SRC_DIR="$PROJECT_DIR/src"
 LIB_DIR="$PROJECT_DIR/lib"
 SPARK_JOB_ZIP="spark_job.zip"
-
+LOG_FILE="../logs/spark_job.log"
 # Print current working directory for debugging
 echo "Current working directory: $PROJECT_DIR"
 
@@ -43,4 +43,11 @@ spark-submit \
   --extract_name find_persons_with_valid_emails \
   --extract_name citywise_gender_distribution \
   --extract_name find_people_under_same_public_ip4 \
-  --extract_name count_total_iid_each_state
+  --extract_name count_total_iid_each_state > "$LOG_FILE" 2>&1
+
+# Check if Spark job completed successfully
+if [ $? -eq 0 ]; then
+  echo "Spark job completed successfully."
+else
+  echo "Spark job failed. Check $LOG_FILE for details."
+fi
