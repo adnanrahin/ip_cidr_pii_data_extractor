@@ -2,3 +2,4 @@
 __pycache__
 extract_outputs/*
 lib/*
+logs/*
