@@ -38,11 +38,6 @@ class DataExtractor:
         pivot_df.persist(StorageLevel.MEMORY_AND_DISK)
         return pivot_df
 
-    def average_age_each_state(self) -> DataFrame:
-        result_df = self.person_domain_df.groupBy("state").agg(avg(col("age")).alias("average_age"))
-        result_df.persist(StorageLevel.MEMORY_AND_DISK)
-        return result_df
-
     def top_states_by_persons(self, top_n: int = 5) -> DataFrame:
         state_count_df = self.person_domain_df.groupBy("state").count().alias("total_persons")
         top_states_df = state_count_df.orderBy(col("count").desc()).limit(top_n)

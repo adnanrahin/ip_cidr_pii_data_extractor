@@ -38,4 +38,8 @@ spark-submit \
   --extract_name top_cities_by_population \
   --extract_name find_persons_with_invalid_emails \
   --extract_name statewise_male_female_count \
+  --extract_name top_states_by_persons \
+  --extract_name count_unique_ips_per_state \
+  --extract_name find_persons_with_valid_emails \
+  --extract_name citywise_gender_distribution \
   --extract_name count_total_iid_each_state
