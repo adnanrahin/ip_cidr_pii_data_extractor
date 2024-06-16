@@ -18,11 +18,6 @@ class DataExtractor:
         result_df.persist(StorageLevel.MEMORY_AND_DISK)
         return result_df
 
-    def average_age_each_state(self) -> DataFrame:
-        result_df = self.person_domain_df.groupBy(col("state")).agg(avg(col("age")).alias("average_age"))
-        result_df.persist(StorageLevel.MEMORY_AND_DISK)
-        return result_df
-
     def top_cities_by_population(self, top_n: int = 10) -> DataFrame:
         city_population_df = self.person_domain_df.groupBy(col("city")).count().alias("population")
         window_spec = Window.orderBy(col("count").desc())
