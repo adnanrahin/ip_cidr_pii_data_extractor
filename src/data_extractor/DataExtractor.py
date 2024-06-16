@@ -65,6 +65,15 @@ class DataExtractor:
         pivot_df.persist(StorageLevel.MEMORY_AND_DISK)
         return pivot_df
 
+    def find_people_under_same_public_ip4(self) -> DataFrame:
+        # Group by ipV4 column and count distinct guIds (assuming guId is a unique identifier)
+        people_under_same_ip4_df = self.person_domain_df.groupBy("ipV4").agg(
+            countDistinct(col("guId")).alias("unique_persons_count")
+        ).filter(col("unique_persons_count") > 1)  # Filter to get only those with more than one person
+
+        people_under_same_ip4_df.persist(StorageLevel.MEMORY_AND_DISK)
+        return people_under_same_ip4_df
+
     def run_extraction(self, extracts: list) -> dict:
         results = {}
         for extract in extracts:
