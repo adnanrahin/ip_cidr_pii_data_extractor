@@ -1,11 +1,23 @@
 #!/bin/bash
 
+# Set variables for directories
+PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
+SRC_DIR="$PROJECT_DIR/src"
+LIB_DIR="$PROJECT_DIR/lib"
+SPARK_JOB_ZIP="spark_job.zip"
+
 # Print current working directory for debugging
-echo "Current working directory: $(pwd)"
+echo "Current working directory: $PROJECT_DIR"
+
+# Change to source directory
+cd "$SRC_DIR" || exit
 
 # Zip Python files
 echo "Zipping Python files..."
-zip -r ../lib/spark_job.zip ../src/*.py
+zip -r "$LIB_DIR/$SPARK_JOB_ZIP" ./*.py ./data_loader/*.py ./data_writer/*.py ./data_extractor/*.py
+
+# Change back to the original directory
+cd - || exit
 
 # Submit Spark job
 echo "Submitting Spark job..."
@@ -17,8 +29,8 @@ spark-submit \
   --executor-memory 8G \
   --executor-cores 2 \
   --total-executor-cores 12 \
-  --py-files ../lib/spark_job.zip \
-  ../src/SparkDataFrameLatencyProcessor.py \
+  --py-files "$LIB_DIR/$SPARK_JOB_ZIP" \
+  "$SRC_DIR/SparkDataFrameLatencyProcessor.py" \
   --input_data_dir /sandbox/storage/data/ip_cidr_data/dataset/ip_cidr_data_parquet \
   --extract_output_data_dir /sandbox/storage/data/ip_cidr_data/filter_data/pyspark_extracted_data \
   --extract_name find_all_male_person \
