@@ -42,4 +42,5 @@ spark-submit \
   --extract_name count_unique_ips_per_state \
   --extract_name find_persons_with_valid_emails \
   --extract_name citywise_gender_distribution \
+  --extract_name find_people_under_same_public_ip4 \
   --extract_name count_total_iid_each_state
