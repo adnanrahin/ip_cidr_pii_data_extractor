@@ -4,12 +4,14 @@
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 SRC_DIR="$PROJECT_DIR/src"
 LIB_DIR="$PROJECT_DIR/lib"
-LOG_DIR="$PROJECT_DIR/logs"
-SPARK_JOB_ZIP="spark_job.zip"
-LOG_FILE="$LOG_DIR/spark_job.log"
+LOG_DIR="/home/rahin/application-logs/ip_cidr_pyspark"
 
 # Ensure log directory exists
 mkdir -p "$LOG_DIR"
+
+# Generate a unique log file name with a timestamp
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+LOG_FILE="$LOG_DIR/spark_job_$TIMESTAMP.log"
 
 # Print current working directory for debugging
 echo "Current working directory: $PROJECT_DIR"
@@ -19,7 +21,7 @@ cd "$SRC_DIR" || { echo "Error: Unable to change to source directory $SRC_DIR"; 
 
 # Zip Python files
 echo "Zipping Python files..."
-zip -r "$LIB_DIR/$SPARK_JOB_ZIP" ./*.py ./data_loader/*.py ./data_writer/*.py ./data_extractor/*.py > "$LOG_FILE" 2>&1
+zip -r "$LIB_DIR/$SPARK_JOB_ZIP" ./*.py ./data_loader/*.py ./data_writer/*.py ./data_extractor/*.py | tee "$LOG_FILE"
 if [ $? -ne 0 ]; then
   echo "Error zipping Python files. Check $LOG_FILE for details."
   exit 1
@@ -52,7 +54,7 @@ spark-submit \
   --extract_name find_persons_with_valid_emails \
   --extract_name citywise_gender_distribution \
   --extract_name find_people_under_same_public_ip4 \
-  --extract_name count_total_iid_each_state >> "$LOG_FILE" 2>&1
+  --extract_name count_total_iid_each_state 2>&1 | tee -a "$LOG_FILE"
 
 # Check if Spark job completed successfully
 if [ $? -eq 0 ]; then
@@ -60,3 +62,4 @@ if [ $? -eq 0 ]; then
 else
   echo "Spark job failed. Check $LOG_FILE for details."
 fi
+
