@@ -10,7 +10,7 @@ class TestDataExtractor(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Initialize a Spark session
-        cls.spark = SparkSession.builder.master("local[*]").appName("DataExtractorTest").getOrCreate()
+        cls.spark = SparkSession.builder.master("local").appName("DataExtractorTest").getOrCreate()
 
         # Sample data matching the provided schema
         cls.sample_data = [
