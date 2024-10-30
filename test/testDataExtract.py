@@ -57,7 +57,12 @@ class TestDataExtractor(unittest.TestCase):
         self.assertTrue(all(row.gender.lower() == "male" for row in male_data))
 
         # Check the number of rows matches expected
-        self.assertEqual(len(male_data), 2)  # Only "Gray McElvine" and "Yankee Jannex" are male in sample data
+        self.assertEqual(len(male_data), 2)  # Expecting 2 males
+
+        # Check specific male names
+        expected_names = {"Gray McElvine", "Yankee Jannex"}
+        actual_names = {f"{row.firstName} {row.lastName}" for row in male_data}
+        self.assertEqual(actual_names, expected_names)
 
     def test_count_total_iid_each_state(self):
         # Call the method
@@ -67,9 +72,12 @@ class TestDataExtractor(unittest.TestCase):
         state_count_data = {row.state: row["count"] for row in state_count_df.collect()}
 
         # Check the counts per state
-        self.assertEqual(state_count_data["California"], 2)  # 2 entries for California in sample data
-        self.assertEqual(state_count_data["Virginia"], 1)  # 1 entry for Virginia
-        self.assertEqual(state_count_data["Texas"], 1)  # 1 entry for Texas
+        self.assertEqual(state_count_data.get("California"), 2)  # 2 entries for California
+        self.assertEqual(state_count_data.get("Virginia"), 1)  # 1 entry for Virginia
+        self.assertEqual(state_count_data.get("Texas"), 1)  # 1 entry for Texas
+
+        # Check if a state with no entries returns a count of 0
+        self.assertEqual(state_count_data.get("New York"), 0)  # Assuming no data for New York
 
 
 if __name__ == "__main__":
