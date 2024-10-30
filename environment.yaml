@@ -1,0 +1,9 @@
+name: ip_cidr_pyspark_env
+channels:
+  - defaults
+dependencies:
+  - python=3.9.13
+  - pip
+  - pip:
+      - pyspark==3.3.1
+      - pytest==8.3.3
