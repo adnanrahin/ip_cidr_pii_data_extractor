@@ -2,7 +2,7 @@ import unittest
 from pyspark.sql import SparkSession
 from pyspark.sql import DataFrame
 from pyspark.sql import Row
-from src.data_extractor.DataExtractor import DataExtractor
+from data_extractor.DataExtractor import DataExtractor
 
 
 class TestDataExtractor(unittest.TestCase):
