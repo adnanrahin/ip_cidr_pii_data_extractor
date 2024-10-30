@@ -77,7 +77,8 @@ class TestDataExtractor(unittest.TestCase):
         self.assertEqual(state_count_data.get("Texas"), 1)  # 1 entry for Texas
 
         # Check if a state with no entries returns a count of 0
-        self.assertEqual(state_count_data.get("New York"), 0)  # Assuming no data for New York
+        # Instead of checking .get() which can return None, use .get(key, default)
+        self.assertEqual(state_count_data.get("New York", 0), 0)  # Should return 0
 
 
 if __name__ == "__main__":
