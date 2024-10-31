@@ -40,3 +40,19 @@ Once the environment is created, activate it using the following command:
 
 ```bash
 conda activate ip_cidr_pyspark_env
+```
+
+### Running Test
+#### Running Test using Pytest
+```bash
+pytest test/testScriptName.py
+```
+#### Running Test using Python Unittest Command
+```bash
+python -m unittest discover -s test/
+```
+
+#### Running Test using spark-submit
+```bash
+spark-submit --master local[*] testScriptName.py
+```
